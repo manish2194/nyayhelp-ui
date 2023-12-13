@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import axios from 'axios';
 import RichTextEditor from './Common/RichTextEditor'
+import {createBlog} from '../services/api/blogs'
 
 const FormWrapper = styled.form`
   background-color: #f7f9fc;
@@ -87,15 +88,16 @@ async function handleSubmit(e) {
   data.append('description', formData.description);
   data.append('tag', formData.tag);
   data.append('content', updateContent);
+  data.append('image_url', "https://images.unsplash.com/photo-1550439062-609e1531270e")
 
   
   
-  if (formData.imageFile) {
-    data.append('image', formData.imageFile);
-  }
+  // if (formData.imageFile) {
+  //   data.append('image', formData.imageFile);
+  // }
 
   try {
-    const response = await axios.post(url, data);
+    const response = await createBlog(data);
 
     alert('Blog successfully saved!');
     // Optionally, you can clear the form, navigate to another page, or perform other actions upon successful request.
@@ -151,14 +153,22 @@ async function handleSubmit(e) {
       <Label htmlFor="content">Content:</Label>
      <RichTextEditor value={formData.content} onChange={handleContentChange} />
 
-      <Label htmlFor="imageFile">Select Image:</Label>
+      <Label htmlFor="imageFile">Image url:</Label>
       <Input
+        type="text"
+        id="description"
+        name="description"
+        value={formData.image_url}
+        onChange={handleChange}
+        required
+      />
+      {/* <Input
         type="file"
         id="imageFile"
         name="imageFile"
         accept="image/*"
         onChange={handleChange}
-      />
+      /> */}
 
       <Label htmlFor="tag">Tag:</Label>
       <Select id="tag" name="tag" value={formData.tag} onChange={handleChange}>

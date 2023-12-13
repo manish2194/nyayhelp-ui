@@ -3,8 +3,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import axios from "axios";
-import { Navigate } from "react-router-dom";
-const EMAIL_REGEX = "([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\"\(\[\]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(\.[!#-'*+/-9=?A-Z^-~-]+)*|\[[\t -Z^-~]*])";
+import { useNavigate } from "react-router-dom";
+const EMAIL_REGEX =
+  "([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|\"([]!#-[^-~ \t]|(\\[\t -~]))+\")@([!#-'*+/-9=?A-Z^-~-]+(.[!#-'*+/-9=?A-Z^-~-]+)*|[[\t -Z^-~]*])";
 import { config } from "../config";
 
 const ErrorMessage = styled.div`
@@ -68,10 +69,12 @@ const RegisterPage = styled.div`
 `;
 
 const Register = () => {
+  const navigate = useNavigate();
   const regex = new RegExp(EMAIL_REGEX);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
+    user_name: "",
   });
   const [confirm_password, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -85,25 +88,24 @@ const Register = () => {
   };
 
   const handleRegister = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      if(!regex.test(formData.email)){
+      if (!regex.test(formData.email)) {
         throw new Error("Invalid email address");
       }
       if (confirm_password !== formData.password) {
         throw new Error("Password mismatch");
       }
-      if (formData.password.length < 6)  {
+      if (formData.password.length < 6) {
         throw new Error("Password should be minimum of 6 character");
       }
       const resp = await axios.post(`${config.API_URL}/register`, formData, {
         headers: {
-          'Content-Type': 'application/json'
-        }
+          "Content-Type": "application/json",
+        },
       });
-      console.log("response", resp)
-      
-
+      redirectLogin();
+      console.log("response", resp);
     } catch (err) {
       console.log("Error while logging in", err);
       setError(err.message || "Error while logging in. Please try again.");
@@ -111,11 +113,25 @@ const Register = () => {
     }
   };
 
+  const redirectLogin = () => {
+    navigate("/login");
+  };
+
   return (
     <RegisterPage>
       <RegisterContainer>
         <RegisterForm>
           <Title>Register</Title>
+          <FormGroup>
+            <Label htmlFor="user_name">User Name</Label>
+            <Input
+              type="user_name"
+              id="user_name"
+              value={formData.user_name}
+              onChange={handleFormChange}
+              required
+            />
+          </FormGroup>
           <FormGroup>
             <Label htmlFor="email">Email</Label>
             <Input
@@ -148,6 +164,7 @@ const Register = () => {
           </FormGroup>
           <FormGroup>
             <Button onClick={handleRegister}>Register</Button>
+            <Button onClick={redirectLogin}>Login</Button>
           </FormGroup>
           {error && <ErrorMessage>{error}</ErrorMessage>}
         </RegisterForm>

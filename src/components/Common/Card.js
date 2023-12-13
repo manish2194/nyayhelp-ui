@@ -9,7 +9,7 @@ const CardContainer = styled.div`
   transition: transform 0.3s;
 
   &:hover {
-    transform: scale(1.05);
+    // transform: scale(1.05);
   }
 `;
 
@@ -20,11 +20,11 @@ const CardImage = styled.img`
 `;
 
 const CardContent = styled.div`
-  padding: 15px;
+  padding: 10px;
 `;
 
 const CardTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1rem;
   margin-bottom: 10px;
 `;
 
@@ -49,12 +49,24 @@ const CardDate = styled.span`
   font-size: 0.8rem;
 `;
 
-const Card =  ({ title, description, imageUrl, author, date })  => {
+const Avatar = styled.img`
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 15px;
+  object-fit: cover;
+  border: 2px solid #007bff; // Give avatar a border;
+  float: left
+`;
+
+const Card =  ({ title, description, imageUrl, author, date, isBookMarked = false })  => {
   return (
     <CardContainer>
-      <CardImage src={imageUrl} alt={title} />
+      { !isBookMarked && <CardImage src={imageUrl} alt={title} />}
       <CardContent>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle>
+        { isBookMarked && <Avatar src={imageUrl} alt="User Avatar" /> }
+          {title}</CardTitle>
         <CardDescription>{description}</CardDescription>
         <CardMeta>
           <CardAuthor>{author}</CardAuthor>

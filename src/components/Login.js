@@ -1,10 +1,13 @@
 // Login.js
-import axios from 'axios';
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { setAuthToken } from '../utils/axiosInterceptor'
-import styled from 'styled-components';
-import { config } from '../config';
+import axios from "axios";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { setAuthToken } from "../utils/axiosInterceptor";
+import styled from "styled-components";
+import { config } from "../config";
+
+import { useDispatch } from "react-redux";
+import { login } from "../reducer/userReducer";
 
 const ErrorMessage = styled.div`
   color: red;
@@ -67,9 +70,11 @@ const LoginPage = styled.div`
 `;
 
 const Login = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  console.log("tttttttthishdishds");
+  const dispatch = useDispatch();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleEmailChange = (e) => {
@@ -80,32 +85,50 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
+  const handleLogin = () => {
+    // Simulate a login process
+    const userData = { id: 1, username: "example_user" };
+    dispatch(login(userData));
+  };
+
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      const resp = await axios.post(`${config.API_URL}/login`, {
-        email,
-        password,
-      }, {
-        headers: {
-          'Content-Type': 'application/json'
+      const resp = await axios.post(
+        `${config.API_URL}/login`,
+        {
+          email,
+          password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
-      });
+      );
 
       if (resp) {
-        setAuthToken(resp);
-      }
-      else {
-        throw new Error('Bad credentials');
+        console.log("Response on login", resp);
+        const userData = resp?.data?.user;
+        localStorage.setItem("user", JSON.stringify(userData));
+        localStorage.setItem("token", resp?.data?.token);
+        dispatch(login(userData));
+
+        // setAuthToken(resp);
+      } else {
+        throw new Error("Bad credentials");
       }
 
-      navigate('/home')
-    }
-    catch (err) {
+      navigate("/home");
+    } catch (err) {
       console.log("Error while logging in", err);
-      setError('Error while logging in. Please try again.'); // Set the error message
+      setError("Error while logging in. Please try again."); // Set the error message
       e.preventDefault();
     }
+  };
+
+  const navigateToRegister = () => {
+    navigate("/register");
   };
 
   return (
@@ -135,8 +158,10 @@ const Login = () => {
           </FormGroup>
           <FormGroup>
             <Button type="submit">Login</Button>
+            <Button onClick={navigateToRegister}>Register</Button>
           </FormGroup>
-          {error && <ErrorMessage>{error}</ErrorMessage>} {/* Display error message if 'error' is not empty */}
+          {error && <ErrorMessage>{error}</ErrorMessage>}{" "}
+          {/* Display error message if 'error' is not empty */}
         </LoginForm>
       </LoginContainer>
     </LoginPage>

@@ -17,18 +17,17 @@ import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 
 const FormWrapper = styled.form`
   background-color: #f9fafc;
-  padding: 60px 40px;
+  padding: 10px 10px;
   border-radius: 10px;
   box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.08);
 `;
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 8px;
   font-weight: 500;
   font-size: 1rem;
   color: #555;
-  margin-top: 20px;
+  margin-bottom: 5px;
 `;
 
 const InputIconWrapper = styled.div`
@@ -53,11 +52,12 @@ const ModalOverlay = styled.div`
 
 const ModalWrapper = styled.div`
   width: 90%;
-  max-width: 700px; // Reducing the max width for a more elegant look.
+  height: fit-content;
+  max-width: 500px; // Reducing the max width for a more elegant look.
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.12);
-  padding: 30px;
+  padding: 10px;
   position: relative;
   z-index: 10;
   overflow-y: auto; // In case the content height exceeds the viewport height.
@@ -78,14 +78,43 @@ const CloseButton = styled.button`
   }
 `;
 
+import { submitQuestion } from "../services/api/forum";
+
 // Modal Component
 function AskQuestionModal({ onClose, onSubmit }) {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const title = formData.get("title");
+    const description = formData.get("description");
+    const category = formData.get("category");
+
+    const questionData = {
+      title,
+      description,
+      category,
+    };
+    console.log("questionData", questionData);
+    try {
+      await submitQuestion(questionData);
+      alert("Question submitted successfully");
+    } catch (error) {
+      console.error("Network error:", error);
+    } finally {
+      onSubmit();
+      // setModalOpen(false);
+    }
+  };
+
+
   return (
     <ModalOverlay>
       <ModalWrapper>
         <CloseButton onClick={onClose}>&times;</CloseButton>
         {/* <Heading>Ask a New Question</Heading> */}
-        <FormWrapper onSubmit={onSubmit}>
+        <FormWrapper onSubmit={handleSubmit}>
           <Label htmlFor="title">Title</Label>
           <Input type="text" id="title" name="title" required />
           <Label htmlFor="description">Description</Label>

@@ -1,35 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
-import Card from "./Common/Card";
+import BlogCard from "./Common/BlogCard";
 import { getBlogsData } from "../services/api/blogs";
-import { useNavigate } from "react-router-dom";
-
 const CardGrid = styled.div`
-  display: grid;
   gap: 20px;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   /* This will make it responsive. Adjust 280px based on your card's ideal width. */
 `;
+import { useNavigate } from "react-router-dom";
 
-function CardBasedLayout({ isBookMarked = false }) {
-  let [blogPosts, setBlogPosts] = useState([]);
+function BlogPost({}) {
   const navigate = useNavigate();
-  if (isBookMarked) {
-  }
+  let [blogPosts, setBlogPosts] = useState([]);
   const getBlogs = async () => {
     const blogs = await getBlogsData();
     console.log("blogs", blogs);
     setBlogPosts(blogs.blogs);
   };
 
-  useEffect(() => {
-    getBlogs();
-  }, []);
-
   const handleCardClick = (postId) => {
     navigate(`/blog/${postId}`);
   };
 
+  useEffect(() => {
+    getBlogs();
+  }, []);
   return (
     <CardGrid>
       {blogPosts.map((post) => (
@@ -37,13 +32,12 @@ function CardBasedLayout({ isBookMarked = false }) {
           key={post._id}
           onClick={() => handleCardClick(post._id)} // Call handleCardClick when the card is clicked
         >
-          <Card
-            isBookMarked={isBookMarked}
+          <BlogCard
             key={post._id}
             title={post.title}
-            description={post.description}
+            description={post.content}
             imageUrl={post.image_url}
-            author={post.author.user_name}
+            author={post?.author.user_name}
             date={new Date(post.createdAt).toLocaleDateString()}
           />
         </div>
@@ -52,4 +46,4 @@ function CardBasedLayout({ isBookMarked = false }) {
   );
 }
 
-export default CardBasedLayout;
+export default BlogPost;
