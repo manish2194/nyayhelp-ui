@@ -1,50 +1,3 @@
-// import React from "react";
-// import styled from "styled-components";
-// const Comment = styled.div`
-//     display: flex;
-//     align-items: flex-start;
-//     margin-bottom: 20px;
-//   `;
-
-//   const CommentAuthor = styled.div`
-//     display: flex;
-//     align-items: center;
-//     font-size: 1rem;
-//     color: #555;
-//     font-weight: 500;
-//     margin-right: 10px;
-//   `;
-
-//   const CommentAvatar = styled.img`
-//     width: 40px;
-//     height: 40px;
-//     border-radius: 50%;
-//     margin-right: 10px;
-//   `;
-
-//   const CommentText = styled.div`
-//     font-size: 1.2rem;
-//     line-height: 1.8;
-//     color: #333;
-//   `;
-// const CommentSection = ({comments}) => {
-
-//   return comments.map((comment, index) => (
-//     <Comment key={index}>
-//       <CommentAuthor>
-//         <CommentAvatar
-//           src={comment.user.image_url || '/default-avatar.png'} // Use the user's image_url or a default avatar
-//           alt={comment.user.user_name}
-//         />
-//         {comment.user.user_name}
-//       </CommentAuthor>
-//       <CommentText>{comment.comment}</CommentText>
-//     </Comment>
-//   ));
-// };
-
-// export default CommentSection;
-
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -56,18 +9,16 @@ import { submitComment, getCommentsById } from "../services/api/forum";
 const CommentSectionContainer = styled.div`
   border: 1px solid #e1e1e1;
   border-radius: 10px;
-  padding: 20px;
+  padding: 10px;
   background-color: #f9f9f9;
 `;
 
 const Comment = styled.div`
   display: flex;
-  justify-content: space-between;
-  align-items: center;
   margin-bottom: 20px;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
-  padding: 15px;
+  padding: 5px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   cursor: pointer;
@@ -81,7 +32,7 @@ const CommentAvatar = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 15px;
+  margin-right: 5px;
 `;
 
 const CommentContent = styled.div`
@@ -89,38 +40,32 @@ const CommentContent = styled.div`
 `;
 
 const CommentAuthor = styled.div`
-  font-size: 1.4rem;
-  font-weight: 600;
-  color: #1877f2;
-  margin-bottom: 5px;
-  font-family: "Arial", sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-bottom: 2px;
 `;
 
 const CommentText = styled.div`
-  font-size: 1.2rem;
+  font-size: 1rem;
   line-height: 1.4;
-  color: #333;
-  font-family: "Arial", sans-serif;
 `;
 
 const LikeIcon = styled(FontAwesomeIcon)`
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #1877f2;
-  margin-right: 5px;
+  margin-left: 5px;
 `;
 
 const LikeCount = styled.div`
-  font-size: 1.2rem;
+  font-size: 1rem;
   color: #555;
-  display: flex;
-  align-items: center;
 `;
 
 const CommentHeading = styled.h2`
-  font-size: 1.6rem;
-  margin-bottom: 15px;
-  color: #333;
-  font-weight: 600;
+  margin: 0px;
+  font-size: 1rem;
+  margin-bottom: 5px;
+  font-weight: 200;
 `;
 
 const AddCommentSection = styled.div`
@@ -131,39 +76,36 @@ const AddCommentButton = styled.button`
   background-color: #1877f2;
   color: #fff;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.2rem;
-  margin-right: 10px;
+  font-size: 1rem;
 `;
-
 const AddCommentDialog = styled.div`
   display: ${(props) => (props.isOpen ? "block" : "none")};
   background-color: #fff;
   border: 1px solid #e1e1e1;
   border-radius: 10px;
-  padding: 15px;
-  margin-top: 10px;
+  padding: 5px;
+  margin-top: 5px;
 `;
 
 const AddCommentTextarea = styled.textarea`
   width: 100%;
-  padding: 10px;
+  min-height: 100px;
+  padding: 0px;
   border: 1px solid #e1e1e1;
   border-radius: 5px;
-  font-size: 1.2rem;
-  margin-bottom: 10px;
 `;
 
 const SaveCommentButton = styled.button`
   background-color: #1877f2;
   color: #fff;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin-right: 10px;
 `;
 
@@ -171,10 +113,10 @@ const CancelCommentButton = styled.button`
   background-color: #e1e1e1;
   color: #333;
   border: none;
-  padding: 10px 15px;
+  padding: 10px 10px;
   border-radius: 5px;
   cursor: pointer;
-  font-size: 1.2rem;
+  font-size: 1rem;
 `;
 
 const CommentSection = ({ comments, questionId }) => {
@@ -214,9 +156,9 @@ const CommentSection = ({ comments, questionId }) => {
 
   return (
     <CommentSectionContainer>
-      <CommentHeading>Comments</CommentHeading>
+      <CommentHeading>Replies</CommentHeading>
       {commentList.length === 0 ? (
-        <p>No comments available.</p>
+        <p>No reply available.</p>
       ) : (
         commentList.map((comment, index) => (
           <Comment key={index}>
@@ -240,12 +182,14 @@ const CommentSection = ({ comments, questionId }) => {
       )}
       {user && (
         <AddCommentSection>
-          <AddCommentButton onClick={openAddCommentDialog}>
-            Add Comment
-          </AddCommentButton>
+          {!isAddCommentOpen && (
+            <AddCommentButton onClick={openAddCommentDialog}>
+              Leave a reply
+            </AddCommentButton>
+          )}
           <AddCommentDialog isOpen={isAddCommentOpen}>
             <AddCommentTextarea
-              placeholder="Write your comment..."
+              placeholder="Add a reply ... "
               value={newComment}
               onChange={handleNewCommentChange}
             />

@@ -15,15 +15,14 @@ const Container = styled.div`
 
 const LeftPanel = styled.div`
   flex: 1;
-  margin: 0rem 1rem;
+  margin: 0px 5px;
+  padding: 5px;
   height: 100%;
   box-shadow: 4px 0 4px rgba(0, 0, 0, 0.1); /* Add box shadow on the right side */
   @media (max-width: 768px) {
     order: 2; /* Change the order for mobile view */
-    
   }
 `;
-
 
 const MiddleContent = styled.div`
   flex: 5;
@@ -44,12 +43,11 @@ const RightPanel = styled.div`
   }
 `;
 const BookmarkedDiv = styled.div`
-  padding: 10px;
   border-radius: 5px;
 `;
 
 const BookmarkedTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.2rem;
   margin: 0;
 `;
 
@@ -59,15 +57,11 @@ const Home = () => {
   return (
     <Container>
       <LeftPanel>
-      <BookmarkedDiv>
-            <BookmarkedTitle>Bookmarked</BookmarkedTitle>
-          </BookmarkedDiv>
+        <BookmarkedTitle>Bookmarked</BookmarkedTitle>
         <Blog isBookMarked={isBookMarked}></Blog>
       </LeftPanel>
       <MiddleContent>
-        <div>
-          <BlogPost />
-        </div>
+        <BlogPost />
       </MiddleContent>
 
       <RightPanel>

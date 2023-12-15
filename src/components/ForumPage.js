@@ -42,12 +42,11 @@ const RightPanel = styled.div`
 `;
 const ForumContainer = styled.div`
   max-width: 1000px;
-  margin: 80px auto;
   background-color: #fff;
-  padding: 40px 60px;
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: box-shadow 0.3s;
+  padding: 15px 15px;
 
   &:hover {
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
@@ -55,10 +54,9 @@ const ForumContainer = styled.div`
 `;
 
 const ForumTitle = styled.h1`
-  font-size: 3rem;
-  margin-bottom: 25px;
-  color: #333;
-  font-weight: 600;
+  font-size: 1.5rem;
+  font-weight: 500;
+  ine-height: 1.2;
   letter-spacing: -1px;
 `;
 
@@ -112,40 +110,6 @@ function ForumPage() {
     console.log("question", question);
     setQuestion(question.question);
     setComments(comments.comments);
-    // setComments(
-    //   question.comments || [
-    //     {
-    //       comment: "This is a frist comment",
-    //       likes: 90,
-    //       user: {
-    //         _id: "dwdsdssd",
-    //         full_name: "Manish Kumar",
-    //         image_url:
-    //           "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89",
-    //       },
-    //     },
-    //     {
-    //       comment: "This is a second comment",
-    //       likes: 50,
-    //       user: {
-    //         _id: "dwdsdssd",
-    //         full_name: "Manish Kumar",
-    //         image_url:
-    //           "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89",
-    //       },
-    //     },
-    //     {
-    //       likes: 90,
-    //       comment: "This is a third comment",
-    //       user: {
-    //         _id: "dwdsdssd",
-    //         full_name: "Manish Kumar",
-    //         image_url:
-    //           "https://images.unsplash.com/photo-1593642632559-0c6d3fc62b89",
-    //       },
-    //     },
-    //   ]
-    // );
   };
 
   useEffect(() => {
@@ -174,7 +138,7 @@ function ForumPage() {
               <ForumImage src={question.image_url} alt={question.title} />
             )}
             <ForumContent
-              dangerouslySetInnerHTML={{ __html: question.content }}
+              dangerouslySetInnerHTML={{ __html: question.description }}
             />
             <CommentSectionDiv>
               <CommentSection

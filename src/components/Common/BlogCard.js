@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from "react";
+import styled from "styled-components";
 
 const CardContainer = styled.div`
   width: 100%;
@@ -13,20 +13,19 @@ const CardContainer = styled.div`
   margin-bottom: 10px;
   margin-left: 5px;
   min-height: fit-content;
-    padding-bottom: 1px;
+  padding-bottom: 1px;
 `;
 const CardImageContent = styled.div`
-flex: 2;
-margin: auto;
+  flex: 2;
+  margin: auto;
 `;
 const CardContent = styled.div`
-  padding: 15px;
+  padding: 10px;
   flex: 5;
   text-align: left; /* Align text to the right */
 `;
 
 const CardImage = styled.img`
-
   width: 100%;
   height: 150px; /* Set a fixed height for better center alignment */
   object-fit: cover;
@@ -36,14 +35,15 @@ const CardImage = styled.img`
   display: block; /* Remove any default inline styles that might affect centering */
 `;
 const CardTitle = styled.h2`
-  font-size: 1.5rem;
+  font-size: 1.1rem;
   margin: 0px;
   color: #333;
 `;
 
 const CardDescription = styled.p`
-  font-size: 1.2rem;
-  color: #666;
+  margin: 0px;
+  margin-top: 2px;
+  font-size: 1rem;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -63,7 +63,7 @@ const CardMeta = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 15px;
+  margin-top: 5px;
 `;
 
 const CardAuthor = styled.span`
@@ -87,15 +87,17 @@ const BlogCard = ({ title, description, imageUrl, author, date }) => {
   return (
     <CardContainer>
       <CardImageContent>
-      <CardImage src={imageUrl} alt={title} />
+        <CardImage src={imageUrl} alt={title} />
       </CardImageContent>
       <CardContent>
         <CardTitle>{title}</CardTitle>
         <CardDescription>
-          {showFullDescription ? description : `${description.slice(0, 300)}...`}
+          {showFullDescription
+            ? description
+            : `${description.slice(0, 300)}...`}
           {description.length > 200 && (
             <ReadMoreLink onClick={toggleDescription}>
-              {showFullDescription ? 'Read less' : 'Read more'}
+              {showFullDescription ? "Read less" : "Read more"}
             </ReadMoreLink>
           )}
         </CardDescription>
@@ -109,4 +111,3 @@ const BlogCard = ({ title, description, imageUrl, author, date }) => {
 };
 
 export default BlogCard;
-

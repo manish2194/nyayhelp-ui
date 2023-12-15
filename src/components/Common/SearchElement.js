@@ -7,7 +7,7 @@ const SearchWrapper = styled.div`
   position: relative;
   display: flex;
   align-items: center;
-  width: 60%;
+  width: 500px;
 
   @media (max-width: 768px) {
     width: 100%;

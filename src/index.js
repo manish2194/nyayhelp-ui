@@ -42,7 +42,7 @@ import { login } from "./reducer/userReducer";
 const Container = styled.div`
   display: flex;
   align-items: flex-start;
-  margin-top: 10px;
+  margin-top: 130px;
 `;
 const QuickLinkContainer = styled.div`
   // background: #fdf0dd4a;
@@ -78,9 +78,9 @@ const App = () => {
   return (
     <div className="app">
       <Header />
-      <QuickLinkContainer>
-        <QuickLink />
-      </QuickLinkContainer>
+      {/* <QuickLinkContainer> */}
+      <QuickLink />
+      {/* </QuickLinkContainer> */}
 
       <Container>
         {/* <SideNavBar /> */}

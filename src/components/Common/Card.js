@@ -1,5 +1,5 @@
-import React from 'react';
-import styled from 'styled-components';
+import React from "react";
+import styled from "styled-components";
 
 const CardContainer = styled.div`
   background: #fff;
@@ -26,10 +26,12 @@ const CardContent = styled.div`
 const CardTitle = styled.h2`
   font-size: 1rem;
   margin-bottom: 10px;
+  margin: 0px;
 `;
 
 const CardDescription = styled.p`
   color: #666;
+  margin: 0px;
 `;
 
 const CardMeta = styled.div`
@@ -40,8 +42,8 @@ const CardMeta = styled.div`
 `;
 
 const CardAuthor = styled.span`
-  font-weight: 600;
   font-size: 0.9rem;
+  margin: 0px;
 `;
 
 const CardDate = styled.span`
@@ -53,20 +55,28 @@ const Avatar = styled.img`
   width: 50px;
   height: 50px;
   border-radius: 50%;
-  margin-right: 15px;
+  margin-right: 5px;
   object-fit: cover;
   border: 2px solid #007bff; // Give avatar a border;
-  float: left
+  float: left;
 `;
 
-const Card =  ({ title, description, imageUrl, author, date, isBookMarked = false })  => {
+const Card = ({
+  title,
+  description,
+  imageUrl,
+  author,
+  date,
+  isBookMarked = false,
+}) => {
   return (
     <CardContainer>
-      { !isBookMarked && <CardImage src={imageUrl} alt={title} />}
+      {!isBookMarked && <CardImage src={imageUrl} alt={title} />}
       <CardContent>
         <CardTitle>
-        { isBookMarked && <Avatar src={imageUrl} alt="User Avatar" /> }
-          {title}</CardTitle>
+          {isBookMarked && <Avatar src={imageUrl} alt="User Avatar" />}
+          {title}
+        </CardTitle>
         <CardDescription>{description}</CardDescription>
         <CardMeta>
           <CardAuthor>{author}</CardAuthor>
@@ -75,6 +85,6 @@ const Card =  ({ title, description, imageUrl, author, date, isBookMarked = fals
       </CardContent>
     </CardContainer>
   );
-}
+};
 
 export default Card;

@@ -23,15 +23,11 @@ const FiltersWrapper = styled.div`
   margin-bottom: 20px;
 `;
 
-const QuestionList = styled.div`
-  // margin-top: 20px;
-`;
-
 const QuestionItem = styled.div`
   display: flex;
   align-items: center;
-  padding: 5px 10px;
-  margin-bottom: 15px;
+  padding: 5px 5px;
+  margin-bottom: 2px;
   border: 1px solid #e8e8e8;
   border-radius: 10px;
   transition: box-shadow 0.2s;
@@ -56,9 +52,19 @@ const QuestionContent = styled.div`
 
 const QuestionTitle = styled.h2`
   margin: 0;
-  font-size: 1.5rem;
+  padding-bottom: 1px;
+  font-size: 1.2rem;
   font-weight: 500;
-  color: #333;
+  &:hover {
+    color: #4baf50;
+  }
+`;
+
+const QuestionPost = styled.p`
+  padding: 1px;
+  margin: 1px;
+  font-size: 0.9rem;
+  font-weight: 200;
 `;
 
 const DiscussionTopics = styled.div`
@@ -106,33 +112,29 @@ function Forum({ isHomePage = false }) {
             <Button onClick={onClick}>Post a Question</Button>
           </FiltersWrapper>
         )}
-        <QuestionList>
-          <DiscussionTopics>
-            <DiscussionTitle>Discussion Topics</DiscussionTitle>
-          </DiscussionTopics>
-          {questionList.map((qList) => (
-            <div key={qList._id} onClick={() => handleCardClick(qList._id)}>
-              <QuestionItem>
-                {!isHomePage && (
-                  <Avatar
-                    src="https://via.placeholder.com/50"
-                    alt="User Avatar"
-                  />
-                )}
-                <QuestionContent>
-                  <QuestionTitle>
-                    <Link to="/forum/questions/1">{qList.title}</Link>
-                  </QuestionTitle>
-                  <p>
-                    Posted by {qList.user.user_name}{" "}
-                    {new Date(qList.createdAt).toLocaleDateString()} |{" "}
-                    {qList.total_comments} answers
-                  </p>
-                </QuestionContent>
-              </QuestionItem>
-            </div>
-          ))}
-        </QuestionList>
+        <DiscussionTopics>
+          <DiscussionTitle>Legal Queries</DiscussionTitle>
+        </DiscussionTopics>
+        {questionList.map((qList) => (
+          <div key={qList._id} onClick={() => handleCardClick(qList._id)}>
+            <QuestionItem>
+              {!isHomePage && (
+                <Avatar
+                  src="https://via.placeholder.com/50"
+                  alt="User Avatar"
+                />
+              )}
+              <QuestionContent>
+                <QuestionTitle>{qList.title}</QuestionTitle>
+                <QuestionPost>
+                  {qList.user.user_name}{" "}
+                  {new Date(qList.createdAt).toLocaleDateString()} |{" "}
+                  {qList.total_comments} answers
+                </QuestionPost>
+              </QuestionContent>
+            </QuestionItem>
+          </div>
+        ))}
       </Container>
       <div>
         {isModalOpen && (
