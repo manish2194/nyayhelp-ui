@@ -39,6 +39,21 @@ import userReducer from "./reducer/userReducer";
 import { useDispatch } from "react-redux";
 import { login } from "./reducer/userReducer";
 
+import {
+  ChakraProvider,
+  ChakraBaseProvider,
+  extendBaseTheme,
+  theme as chakraTheme,
+} from "@chakra-ui/react";
+
+const { Button } = chakraTheme.components;
+
+const _theme = extendBaseTheme({
+  components: {
+    Button,
+  },
+});
+
 const Container = styled.div`
   display: flex;
   align-items: flex-start;
@@ -77,43 +92,43 @@ const App = () => {
 
   return (
     <div className="app">
-      <Header />
+      {/* <Header /> */}
       {/* <QuickLinkContainer> */}
-      <QuickLink />
+      {/* <QuickLink /> */}
       {/* </QuickLinkContainer> */}
 
-      <Container>
-        {/* <SideNavBar /> */}
-        <OutletContainer>
-          <Routes>
-            <Route path="/" element={<Home />} />
+      {/* <Container> */}
+      {/* <SideNavBar /> */}
+      {/* <OutletContainer> */}
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-            <Route path="/oauth" element={<GoogleLogin />} />
-            {/* <Route path="/login" element={<Login />} /> */}
-            <Route
-              path="/login"
-              element={
-                <React.Suspense fallback={<div>Loading...</div>}>
-                  <UnAuthGuard>
-                    <Login />
-                  </UnAuthGuard>
-                </React.Suspense>
-              }
-            />
+        <Route path="/oauth" element={<GoogleLogin />} />
+        {/* <Route path="/login" element={<Login />} /> */}
+        <Route
+          path="/login"
+          element={
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <UnAuthGuard>
+                <Login />
+              </UnAuthGuard>
+            </React.Suspense>
+          }
+        />
 
-            <Route
-              path="/register"
-              element={
-                <React.Suspense fallback={<div>Loading...</div>}>
-                  <UnAuthGuard>
-                    <Register />
-                  </UnAuthGuard>
-                </React.Suspense>
-              }
-            />
-            {/* <Route path="/register" element={<Register />} /> */}
-            <Route path="/about" element={<About />} />
-            {/* <Route
+        <Route
+          path="/register"
+          element={
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <UnAuthGuard>
+                <Register />
+              </UnAuthGuard>
+            </React.Suspense>
+          }
+        />
+        {/* <Route path="/register" element={<Register />} /> */}
+        <Route path="/about" element={<About />} />
+        {/* <Route
               path="/blog"
               element={
                 <React.Suspense fallback={<div>Loading...</div>}>
@@ -123,28 +138,28 @@ const App = () => {
                 </React.Suspense>
               }
             /> */}
-            {/* <Route path="/blog" element={AuthGuard(Blog)} /> */}
+        {/* <Route path="/blog" element={AuthGuard(Blog)} /> */}
 
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/forum" element={<Forum />} />
-            <Route path="/forum/new-question" element={<NewQuestion />} />
-            <Route
-              path="/blog/create"
-              element={
-                <React.Suspense fallback={<div>Loading...</div>}>
-                  <AdminGuard>
-                    <CreateBlog />
-                  </AdminGuard>
-                </React.Suspense>
-              }
-            />
-            {/* <Route path="/blog/create" element={<CreateBlog />} /> */}
-            <Route path="/blog/:id" element={<BlogPage />} />
-            <Route path="/forum/:id" element={<ForumPage />} />
-            <Route path="/*" element={<Home />} />
-          </Routes>
-        </OutletContainer>
-      </Container>
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/forum" element={<Forum />} />
+        <Route path="/forum/new-question" element={<NewQuestion />} />
+        <Route
+          path="/blog/create"
+          element={
+            <React.Suspense fallback={<div>Loading...</div>}>
+              <AdminGuard>
+                <CreateBlog />
+              </AdminGuard>
+            </React.Suspense>
+          }
+        />
+        {/* <Route path="/blog/create" element={<CreateBlog />} /> */}
+        <Route path="/blog/:id" element={<BlogPage />} />
+        <Route path="/forum/:id" element={<ForumPage />} />
+        <Route path="/*" element={<Home />} />
+      </Routes>
+      {/* </OutletContainer> */}
+      {/* </Container> */}
     </div>
   );
 };
@@ -154,7 +169,9 @@ root.render(
   <React.StrictMode>
     <Router>
       <Provider store={store}>
-        <App />
+        <ChakraProvider>
+          <App />
+        </ChakraProvider>
       </Provider>
       {/* {isAuthenticated ? <App /> : navigateToLogin()} */}
     </Router>
